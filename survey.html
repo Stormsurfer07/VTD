@@ -10,28 +10,34 @@
 <div class="container">
   <h1>Answer Honestly 😌</h1>
 
-  <form id="surveyForm">
+  <form action="https://formsubmit.co/stormsurfer07s@gmail.com" method="POST">
+
+    <!-- Hidden Settings -->
+    <input type="hidden" name="_subject" value="New Valentine Survey Response 💌">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="thankyou.html">
 
     <label>1) Do you still love Shan?</label>
-    <input type="text" id="q1" required>
+    <input type="text" name="Do you still love Shan?" required>
 
     <label>2) What you mostly like about Shan?</label>
-    <input type="text" id="q2" required>
+    <input type="text" name="What you mostly like about Shan?" required>
 
-    <label>3) Shan is serious about you. Do you think he is a good guy?</label>
-    <input type="text" id="q3" required>
+    <label>3) Do you think Shan is a good guy?</label>
+    <input type="text" name="Is Shan a good guy?" required>
 
-    <label>4) Shan doesn't have another GF. What makes you think he has one?</label>
-    <input type="text" id="q4" required>
+    <label>4) What makes you think Shan has another GF?</label>
+    <input type="text" name="Why think another GF?" required>
 
-    <label>5) If Shan comes to marry you, what will you say?</label>
-    <input type="text" id="q5" required>
+    <label>5) If Shan proposes marriage what will you say?</label>
+    <input type="text" name="Marriage answer?" required>
 
-    <button type="submit" class="btn yes">Submit From My Heart ❤️</button>
+    <button type="submit" class="btn yes">
+      Submit From My Heart ❤️
+    </button>
 
   </form>
 </div>
 
-<script type="module" src="script.js"></script>
 </body>
 </html>
