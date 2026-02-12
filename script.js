@@ -16,41 +16,52 @@ const database = getDatabase(app);
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
-const responseText = document.getElementById("responseText");
 
 // YES CLICK
-yesBtn.addEventListener("click", () => {
-  push(ref(database, "valentines"), {
-    accepted: true,
-    time: new Date().toISOString(),
-    userAgent: navigator.userAgent
+if (yesBtn) {
+  yesBtn.addEventListener("click", () => {
+    push(ref(database, "valentines"), {
+      accepted: true,
+      time: new Date().toISOString()
+    });
+
+    window.location.href = "disclaimer.html";
   });
-
-  responseText.innerText = "She said YESSSS!!! ❤️✨";
-  yesBtn.style.transform = "scale(1.2)";
-});
-
-// NO ESCAPE LOGIC
-function moveButton() {
-  const container = document.querySelector(".container");
-  const rect = container.getBoundingClientRect();
-
-  const maxX = rect.width - noBtn.offsetWidth;
-  const maxY = rect.height - noBtn.offsetHeight;
-
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
-
-  noBtn.style.position = "absolute";
-  noBtn.style.left = randomX + "px";
-  noBtn.style.top = randomY + "px";
 }
 
-// Desktop hover
-noBtn.addEventListener("mouseover", moveButton);
+// NO ESCAPE
+if (noBtn) {
+  function moveButton() {
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
 
-// Mobile touch
-noBtn.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  moveButton();
-});
+    noBtn.style.position = "absolute";
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+  }
+
+  noBtn.addEventListener("mouseover", moveButton);
+  noBtn.addEventListener("touchstart", moveButton);
+}
+
+// SURVEY SUBMIT
+const surveyForm = document.getElementById("surveyForm");
+
+if (surveyForm) {
+  surveyForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = {
+      q1: document.getElementById("q1").value,
+      q2: document.getElementById("q2").value,
+      q3: document.getElementById("q3").value,
+      q4: document.getElementById("q4").value,
+      q5: document.getElementById("q5").value,
+      submittedAt: new Date().toISOString()
+    };
+
+    push(ref(database, "surveyResponses"), data);
+
+    window.location.href = "thankyou.html";
+  });
+}
