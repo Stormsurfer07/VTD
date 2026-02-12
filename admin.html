@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Private 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>Survey Responses</h1>
+  <div id="responses"></div>
+
+  <button id="clearBtn" class="btn no">
+    Delete All Responses (Testing)
+  </button>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, get, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+const responsesDiv = document.getElementById("responses");
+
+get(ref(database, "surveyResponses")).then(snapshot => {
+  if (snapshot.exists()) {
+    snapshot.forEach(child => {
+      const data = child.val();
+      responsesDiv.innerHTML += `
+        <div class="responseBox">
+          <p><b>Love:</b> ${data.q1}</p>
+          <p><b>Like Most:</b> ${data.q2}</p>
+          <p><b>Good Guy?:</b> ${data.q3}</p>
+          <p><b>Why Think GF?:</b> ${data.q4}</p>
+          <p><b>Marriage Answer:</b> ${data.q5}</p>
+          <hr>
+        </div>
+      `;
+    });
+  } else {
+    responsesDiv.innerHTML = "<p>No responses yet.</p>";
+  }
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  remove(ref(database, "surveyResponses"));
+  alert("All responses deleted.");
+  location.reload();
+});
+
+</script>
+</body>
+</html>
